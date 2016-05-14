@@ -11,17 +11,38 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class CMMainBoardCollectionViewController: UICollectionViewController {
+    
+    var cardImagesUpperDeck = [String]()
+    var cardImagesLowerDeck = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+        
+        cardImagesUpperDeck = setupCardPhotosInRandomOrder()
+        cardImagesLowerDeck = setupCardPhotosInRandomOrder()
+        
+    }
+    
+    func setupCardPhotosInRandomOrder() -> [String] {
+        
+        var newCardImagesDeck = [String]()
+        var previousNumber: UInt32?
+        
+        func randomNumber() -> UInt32 {
+            var randomNumber = arc4random_uniform(8)
+            while previousNumber == randomNumber {
+                randomNumber = arc4random_uniform(8)
+            }
+            previousNumber = randomNumber
+            return randomNumber+1
+        }
+        
+        for _ in 1 ..< 9 {
+            let randomCardImageFilename = "colour\(randomNumber())"
+            newCardImagesDeck.append(randomCardImageFilename)
+        }
+        return newCardImagesDeck
     }
 
     override func didReceiveMemoryWarning() {
@@ -90,5 +111,4 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
     
     }
     */
-
 }
