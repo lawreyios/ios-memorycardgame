@@ -8,107 +8,132 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+let kCardBgImageName = "card_bg"
+private let reuseIdentifier = "CMCardCell"
 
 class CMMainBoardCollectionViewController: UICollectionViewController {
     
-    var cardImagesUpperDeck = [String]()
-    var cardImagesLowerDeck = [String]()
+    let kPoints = 2
+    let kMaxPairOfCards = UInt32(8)
+    
+    var currentActiveDeck = [Card]()
+    var cardUpperDeck = [String]()
+    var cardLowerDeck = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
-        cardImagesUpperDeck = setupCardPhotosInRandomOrder()
-        cardImagesLowerDeck = setupCardPhotosInRandomOrder()
-        
+        startRandomPlacementOfDecks()
     }
+    
+    func startRandomPlacementOfDecks() {
+        
+        cardUpperDeck = setupCardPhotosInRandomOrder()
+        cardLowerDeck = setupCardPhotosInRandomOrder()
+    }
+
     
     func setupCardPhotosInRandomOrder() -> [String] {
         
         var newCardImagesDeck = [String]()
-        var previousNumber: UInt32?
+        var generatedNumbers = [Int]()
+        var counter = UInt32(0)
         
-        func randomNumber() -> UInt32 {
-            var randomNumber = arc4random_uniform(8)
-            while previousNumber == randomNumber {
-                randomNumber = arc4random_uniform(8)
+        var newGeneratedNumber = Int(arc4random_uniform(kMaxPairOfCards)) + 1
+        while counter < kMaxPairOfCards {
+            if !generatedNumbers.contains(newGeneratedNumber){
+                generatedNumbers.append(newGeneratedNumber)
+                counter+=1
+                let newCard = Card(value: newGeneratedNumber)
+                let randomCardImageFilename = "colour\(newGeneratedNumber)"
+                newCardImagesDeck.append(randomCardImageFilename)
+                currentActiveDeck.append(newCard)
+                
+            }else{
+                newGeneratedNumber = Int(arc4random_uniform(kMaxPairOfCards)) + 1
             }
-            previousNumber = randomNumber
-            return randomNumber+1
-        }
-        
-        for _ in 1 ..< 9 {
-            let randomCardImageFilename = "colour\(randomNumber())"
-            newCardImagesDeck.append(randomCardImageFilename)
         }
         return newCardImagesDeck
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    // MARK: UICollectionViewDelegate
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(5, 5, 5, 5)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 5
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        if Device.IS_5_5_INCHES_OR_LARGER() {
+            return CGSizeMake(100, 130)
+        }else if Device.IS_4_7_INCHES_OR_LARGER() {
+            return CGSizeMake(90, 120)
+        }
+        return CGSizeMake(76, 95)
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+                          layout collectionViewLayout: UICollectionViewLayout,
+                                 minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0.0
+    }
+    
+    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        var reusableview: UICollectionReusableView = UICollectionReusableView()
+        
+        if kind == UICollectionElementKindSectionHeader {
+            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "CollectionHeaderView", forIndexPath: indexPath) as! CMHeaderView
+            headerView.backgroundColor = UIColor(red: 241/255, green: 240/255, blue: 233/255, alpha: 1.0)
+            headerView.lblScore.text = "Score : 0"
+            reusableview = headerView
+        }
+        return reusableview
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        return Int(kMaxPairOfCards*2) // 0-17
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
-    
-        // Configure the cell
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CMCardCollectionViewCell
+        
+        let cardImage = UIImage(named: currentActiveDeck[indexPath.row].imageName!)
+        cell.cardImageView.image = cardImage
     
         return cell
     }
 
     // MARK: UICollectionViewDelegate
 
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        var chosenCard = currentActiveDeck[indexPath.row]
+        if !chosenCard.flipped {
+            if indexPath.row < 8 {
+                chosenCard.imageName = cardLowerDeck[indexPath.row]
+                chosenCard.flipped = true
+                currentActiveDeck[indexPath.row] = chosenCard
+            }else{
+                let idx = indexPath.row - 8
+                chosenCard.imageName = cardUpperDeck[idx]
+                chosenCard.flipped = true
+                currentActiveDeck[indexPath.row] = chosenCard
+            }
+        }else{
+            chosenCard.flipped = false
+            chosenCard.imageName = kCardBgImageName
+            currentActiveDeck[indexPath.row] = chosenCard
+        }
+        collectionView.reloadData()
     }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
 }

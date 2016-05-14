@@ -12,6 +12,10 @@
 		AB27C0551CE6F5E90081A17E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB27C0541CE6F5E90081A17E /* Assets.xcassets */; };
 		AB27C0581CE6F5E90081A17E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB27C0561CE6F5E90081A17E /* LaunchScreen.storyboard */; };
 		AB27C0601CE6F6FD0081A17E /* CMMainBoardCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27C05F1CE6F6FD0081A17E /* CMMainBoardCollectionViewController.swift */; };
+		AB27C0631CE785F20081A17E /* CMCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27C0621CE785F20081A17E /* CMCardCollectionViewCell.swift */; };
+		AB27C0651CE7887D0081A17E /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27C0641CE7887D0081A17E /* Device.swift */; };
+		AB27C0681CE78EFF0081A17E /* CMHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27C0671CE78EFF0081A17E /* CMHeaderView.swift */; };
+		AB27C06B1CE794160081A17E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27C06A1CE794160081A17E /* Card.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		AB27C0571CE6F5E90081A17E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB27C0591CE6F5E90081A17E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB27C05F1CE6F6FD0081A17E /* CMMainBoardCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMMainBoardCollectionViewController.swift; sourceTree = "<group>"; };
+		AB27C0621CE785F20081A17E /* CMCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		AB27C0641CE7887D0081A17E /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		AB27C0671CE78EFF0081A17E /* CMHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMHeaderView.swift; sourceTree = "<group>"; };
+		AB27C06A1CE794160081A17E /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +62,7 @@
 		AB27C04C1CE6F5E90081A17E /* ColourMemory */ = {
 			isa = PBXGroup;
 			children = (
+				AB27C0641CE7887D0081A17E /* Device.swift */,
 				AB27C0611CE6F7010081A17E /* ViewControllers */,
 				AB27C04D1CE6F5E90081A17E /* AppDelegate.swift */,
 				AB27C0511CE6F5E90081A17E /* Main.storyboard */,
@@ -67,9 +76,28 @@
 		AB27C0611CE6F7010081A17E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AB27C0691CE7940D0081A17E /* Model */,
+				AB27C0661CE78EE10081A17E /* CustomUI */,
 				AB27C05F1CE6F6FD0081A17E /* CMMainBoardCollectionViewController.swift */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		AB27C0661CE78EE10081A17E /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				AB27C0621CE785F20081A17E /* CMCardCollectionViewCell.swift */,
+				AB27C0671CE78EFF0081A17E /* CMHeaderView.swift */,
+			);
+			name = CustomUI;
+			sourceTree = "<group>";
+		};
+		AB27C0691CE7940D0081A17E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AB27C06A1CE794160081A17E /* Card.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,8 +171,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB27C0631CE785F20081A17E /* CMCardCollectionViewCell.swift in Sources */,
+				AB27C06B1CE794160081A17E /* Card.swift in Sources */,
 				AB27C0601CE6F6FD0081A17E /* CMMainBoardCollectionViewController.swift in Sources */,
+				AB27C0681CE78EFF0081A17E /* CMHeaderView.swift in Sources */,
 				AB27C04E1CE6F5E90081A17E /* AppDelegate.swift in Sources */,
+				AB27C0651CE7887D0081A17E /* Device.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +289,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				INFOPLIST_FILE = ColourMemory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -269,6 +302,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				INFOPLIST_FILE = ColourMemory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -296,6 +330,7 @@
 				AB27C05E1CE6F5E90081A17E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
