@@ -13,12 +13,15 @@ private let reuseIdentifier = "CMCardCell"
 
 class CMMainBoardCollectionViewController: UICollectionViewController {
     
+    let kDelayTimeInSeconds = Double(1)
     let kPoints = 2
-    let kMaxPairOfCards = UInt32(8)
+    let kMaxPairOfCards = Int(8)
     
     var currentActiveDeck = [Card]()
-    var cardUpperDeck = [String]()
-    var cardLowerDeck = [String]()
+    
+    var currentActiveChosenCards = [Card]()
+    var currentActiveChosenCardsIdx = [Int]()
+    var currentScore = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,32 +30,22 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
     
     func startRandomPlacementOfDecks() {
         
-        cardUpperDeck = setupCardPhotosInRandomOrder()
-        cardLowerDeck = setupCardPhotosInRandomOrder()
+        createDeckOfCards()
+        collectionView?.reloadData()
     }
-
     
-    func setupCardPhotosInRandomOrder() -> [String] {
-        
-        var newCardImagesDeck = [String]()
-        var generatedNumbers = [Int]()
-        var counter = UInt32(0)
-        
-        var newGeneratedNumber = Int(arc4random_uniform(kMaxPairOfCards)) + 1
-        while counter < kMaxPairOfCards {
-            if !generatedNumbers.contains(newGeneratedNumber){
-                generatedNumbers.append(newGeneratedNumber)
-                counter+=1
-                let newCard = Card(value: newGeneratedNumber)
-                let randomCardImageFilename = "colour\(newGeneratedNumber)"
-                newCardImagesDeck.append(randomCardImageFilename)
+    func createDeckOfCards() {
+        var numberOfTimes = 0
+        while numberOfTimes < 2 {
+            var currentNumberOfPairs = 0
+            while currentNumberOfPairs < kMaxPairOfCards {
+                let newCard = Card(value: currentNumberOfPairs+1)
                 currentActiveDeck.append(newCard)
-                
-            }else{
-                newGeneratedNumber = Int(arc4random_uniform(kMaxPairOfCards)) + 1
+                currentNumberOfPairs+=1
             }
+            numberOfTimes+=1
         }
-        return newCardImagesDeck
+        currentActiveDeck.shuffle()
     }
 
     // MARK: UICollectionViewDelegate
@@ -86,7 +79,7 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
         if kind == UICollectionElementKindSectionHeader {
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "CollectionHeaderView", forIndexPath: indexPath) as! CMHeaderView
             headerView.backgroundColor = UIColor(red: 241/255, green: 240/255, blue: 233/255, alpha: 1.0)
-            headerView.lblScore.text = "Score : 0"
+            headerView.lblScore.text = "Score : \(currentScore)"
             reusableview = headerView
         }
         return reusableview
@@ -101,7 +94,7 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Int(kMaxPairOfCards*2) // 0-17
+        return Int(kMaxPairOfCards*2) // 0-15
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -117,23 +110,52 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDelegate
 
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        var chosenCard = currentActiveDeck[indexPath.row]
-        if !chosenCard.flipped {
-            if indexPath.row < 8 {
-                chosenCard.imageName = cardLowerDeck[indexPath.row]
+        if currentActiveChosenCards.count == 0 || currentActiveChosenCards.count == 1 {
+            var chosenCard = currentActiveDeck[indexPath.row]
+            currentActiveChosenCards.append(chosenCard)
+            currentActiveChosenCardsIdx.append(indexPath.row)
+            if !chosenCard.flipped {
+                chosenCard.imageName = "colour\(chosenCard.value!)"
                 chosenCard.flipped = true
                 currentActiveDeck[indexPath.row] = chosenCard
-            }else{
-                let idx = indexPath.row - 8
-                chosenCard.imageName = cardUpperDeck[idx]
-                chosenCard.flipped = true
-                currentActiveDeck[indexPath.row] = chosenCard
+                if currentActiveChosenCards.count == 2 {
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(kDelayTimeInSeconds * Double(NSEC_PER_SEC)))
+                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                        if self.checkIfMatch() {
+                            self.currentScore+=self.kPoints
+                            self.currentActiveChosenCardsIdx.removeAll()
+                            self.currentActiveChosenCards.removeAll()
+                            self.collectionView!.reloadData()
+                        }else{
+                            self.resetCardImages()
+                        }
+                    }
+                }
             }
-        }else{
-            chosenCard.flipped = false
-            chosenCard.imageName = kCardBgImageName
-            currentActiveDeck[indexPath.row] = chosenCard
+            collectionView.reloadData()
         }
-        collectionView.reloadData()
+    }
+    
+    func checkIfMatch() -> Bool {
+        let firstCard = currentActiveChosenCards[0]
+        let secondCard = currentActiveChosenCards[1]
+        if firstCard.value == secondCard.value {
+            return true
+        }
+        return false
+    }
+    
+    func resetCardImages() {
+        var firstCard = currentActiveDeck[currentActiveChosenCardsIdx[0]]
+        var secondCard = currentActiveDeck[currentActiveChosenCardsIdx[1]]
+        firstCard.flipped = false
+        firstCard.imageName = kCardBgImageName
+        currentActiveDeck[currentActiveChosenCardsIdx[0]] = firstCard
+        secondCard.flipped = false
+        secondCard.imageName = kCardBgImageName
+        currentActiveDeck[currentActiveChosenCardsIdx[1]] = secondCard
+        currentActiveChosenCardsIdx.removeAll()
+        currentActiveChosenCards.removeAll()
+        collectionView!.reloadData()
     }
 }

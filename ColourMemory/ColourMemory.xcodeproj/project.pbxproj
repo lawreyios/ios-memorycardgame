@@ -16,6 +16,7 @@
 		AB27C0651CE7887D0081A17E /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27C0641CE7887D0081A17E /* Device.swift */; };
 		AB27C0681CE78EFF0081A17E /* CMHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27C0671CE78EFF0081A17E /* CMHeaderView.swift */; };
 		AB27C06B1CE794160081A17E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27C06A1CE794160081A17E /* Card.swift */; };
+		AB915BF41CE8DE2900D4814E /* Array+Shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB915BF31CE8DE2900D4814E /* Array+Shuffle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		AB27C0641CE7887D0081A17E /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		AB27C0671CE78EFF0081A17E /* CMHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMHeaderView.swift; sourceTree = "<group>"; };
 		AB27C06A1CE794160081A17E /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		AB915BF31CE8DE2900D4814E /* Array+Shuffle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Shuffle.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				AB27C0691CE7940D0081A17E /* Model */,
 				AB27C0661CE78EE10081A17E /* CustomUI */,
 				AB27C05F1CE6F6FD0081A17E /* CMMainBoardCollectionViewController.swift */,
+				AB915BF31CE8DE2900D4814E /* Array+Shuffle.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 				AB27C0631CE785F20081A17E /* CMCardCollectionViewCell.swift in Sources */,
 				AB27C06B1CE794160081A17E /* Card.swift in Sources */,
 				AB27C0601CE6F6FD0081A17E /* CMMainBoardCollectionViewController.swift in Sources */,
+				AB915BF41CE8DE2900D4814E /* Array+Shuffle.swift in Sources */,
 				AB27C0681CE78EFF0081A17E /* CMHeaderView.swift in Sources */,
 				AB27C04E1CE6F5E90081A17E /* AppDelegate.swift in Sources */,
 				AB27C0651CE7887D0081A17E /* Device.swift in Sources */,
