@@ -17,6 +17,20 @@
 		AB27C0681CE78EFF0081A17E /* CMHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27C0671CE78EFF0081A17E /* CMHeaderView.swift */; };
 		AB27C06B1CE794160081A17E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27C06A1CE794160081A17E /* Card.swift */; };
 		AB915BF41CE8DE2900D4814E /* Array+Shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB915BF31CE8DE2900D4814E /* Array+Shuffle.swift */; };
+		CA0A2E3C1CE9776C0010F290 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0A2E3B1CE9776C0010F290 /* Firebase.framework */; };
+		CA0A2E3E1CE9777D0010F290 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0A2E3D1CE9777D0010F290 /* libicucore.tbd */; };
+		CA0A2E401CE977850010F290 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0A2E3F1CE977850010F290 /* libc++.tbd */; };
+		CA0A2E421CE9778B0010F290 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0A2E411CE9778B0010F290 /* CFNetwork.framework */; };
+		CA0A2E441CE977910010F290 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0A2E431CE977910010F290 /* Security.framework */; };
+		CA0A2E461CE977960010F290 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0A2E451CE977960010F290 /* SystemConfiguration.framework */; };
+		CA0A2E481CE977FD0010F290 /* CMFBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A2E471CE977FD0010F290 /* CMFBClient.swift */; };
+		CA0A2E4A1CE978580010F290 /* CMFBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A2E491CE978580010F290 /* CMFBConstants.swift */; };
+		CA0A2E4C1CE98A480010F290 /* CMHighScoresTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A2E4B1CE98A480010F290 /* CMHighScoresTableViewController.swift */; };
+		CA0A2E4E1CE98C2D0010F290 /* CMSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA0A2E4D1CE98C2D0010F290 /* CMSectionHeaderView.xib */; };
+		CA0A2E501CE98D8D0010F290 /* CMSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A2E4F1CE98D8D0010F290 /* CMSectionHeaderView.swift */; };
+		CA0A2E521CE991A70010F290 /* CMPlayerScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A2E511CE991A70010F290 /* CMPlayerScoreTableViewCell.swift */; };
+		CA0A2E541CE993A00010F290 /* PlayerScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A2E531CE993A00010F290 /* PlayerScore.swift */; };
+		CA0A2E561CE9FA510010F290 /* CMCardDealerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A2E551CE9FA510010F290 /* CMCardDealerManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +46,20 @@
 		AB27C0671CE78EFF0081A17E /* CMHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMHeaderView.swift; sourceTree = "<group>"; };
 		AB27C06A1CE794160081A17E /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		AB915BF31CE8DE2900D4814E /* Array+Shuffle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Shuffle.swift"; sourceTree = "<group>"; };
+		CA0A2E3B1CE9776C0010F290 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
+		CA0A2E3D1CE9777D0010F290 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		CA0A2E3F1CE977850010F290 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		CA0A2E411CE9778B0010F290 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		CA0A2E431CE977910010F290 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		CA0A2E451CE977960010F290 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CA0A2E471CE977FD0010F290 /* CMFBClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMFBClient.swift; sourceTree = "<group>"; };
+		CA0A2E491CE978580010F290 /* CMFBConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMFBConstants.swift; sourceTree = "<group>"; };
+		CA0A2E4B1CE98A480010F290 /* CMHighScoresTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMHighScoresTableViewController.swift; sourceTree = "<group>"; };
+		CA0A2E4D1CE98C2D0010F290 /* CMSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMSectionHeaderView.xib; sourceTree = "<group>"; };
+		CA0A2E4F1CE98D8D0010F290 /* CMSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMSectionHeaderView.swift; sourceTree = "<group>"; };
+		CA0A2E511CE991A70010F290 /* CMPlayerScoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMPlayerScoreTableViewCell.swift; sourceTree = "<group>"; };
+		CA0A2E531CE993A00010F290 /* PlayerScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerScore.swift; sourceTree = "<group>"; };
+		CA0A2E551CE9FA510010F290 /* CMCardDealerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMCardDealerManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +67,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA0A2E461CE977960010F290 /* SystemConfiguration.framework in Frameworks */,
+				CA0A2E441CE977910010F290 /* Security.framework in Frameworks */,
+				CA0A2E421CE9778B0010F290 /* CFNetwork.framework in Frameworks */,
+				CA0A2E401CE977850010F290 /* libc++.tbd in Frameworks */,
+				CA0A2E3E1CE9777D0010F290 /* libicucore.tbd in Frameworks */,
+				CA0A2E3C1CE9776C0010F290 /* Firebase.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				AB27C04C1CE6F5E90081A17E /* ColourMemory */,
+				CA0A2E391CE96D8C0010F290 /* Resources */,
 				AB27C04B1CE6F5E90081A17E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,13 +99,11 @@
 		AB27C04C1CE6F5E90081A17E /* ColourMemory */ = {
 			isa = PBXGroup;
 			children = (
-				AB27C0641CE7887D0081A17E /* Device.swift */,
-				AB27C0611CE6F7010081A17E /* ViewControllers */,
 				AB27C04D1CE6F5E90081A17E /* AppDelegate.swift */,
-				AB27C0511CE6F5E90081A17E /* Main.storyboard */,
-				AB27C0541CE6F5E90081A17E /* Assets.xcassets */,
-				AB27C0561CE6F5E90081A17E /* LaunchScreen.storyboard */,
-				AB27C0591CE6F5E90081A17E /* Info.plist */,
+				AB27C0661CE78EE10081A17E /* CustomUI */,
+				CA0A2E381CE96D5E0010F290 /* Helpers */,
+				AB27C0691CE7940D0081A17E /* Model */,
+				AB27C0611CE6F7010081A17E /* ViewControllers */,
 			);
 			path = ColourMemory;
 			sourceTree = "<group>";
@@ -78,10 +111,9 @@
 		AB27C0611CE6F7010081A17E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				AB27C0691CE7940D0081A17E /* Model */,
-				AB27C0661CE78EE10081A17E /* CustomUI */,
+				AB27C0511CE6F5E90081A17E /* Main.storyboard */,
 				AB27C05F1CE6F6FD0081A17E /* CMMainBoardCollectionViewController.swift */,
-				AB915BF31CE8DE2900D4814E /* Array+Shuffle.swift */,
+				CA0A2E4B1CE98A480010F290 /* CMHighScoresTableViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -91,6 +123,9 @@
 			children = (
 				AB27C0621CE785F20081A17E /* CMCardCollectionViewCell.swift */,
 				AB27C0671CE78EFF0081A17E /* CMHeaderView.swift */,
+				CA0A2E4F1CE98D8D0010F290 /* CMSectionHeaderView.swift */,
+				CA0A2E4D1CE98C2D0010F290 /* CMSectionHeaderView.xib */,
+				CA0A2E511CE991A70010F290 /* CMPlayerScoreTableViewCell.swift */,
 			);
 			name = CustomUI;
 			sourceTree = "<group>";
@@ -99,8 +134,46 @@
 			isa = PBXGroup;
 			children = (
 				AB27C06A1CE794160081A17E /* Card.swift */,
+				CA0A2E531CE993A00010F290 /* PlayerScore.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		CA0A2E381CE96D5E0010F290 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				AB27C0641CE7887D0081A17E /* Device.swift */,
+				AB915BF31CE8DE2900D4814E /* Array+Shuffle.swift */,
+				CA0A2E471CE977FD0010F290 /* CMFBClient.swift */,
+				CA0A2E491CE978580010F290 /* CMFBConstants.swift */,
+				CA0A2E551CE9FA510010F290 /* CMCardDealerManager.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		CA0A2E391CE96D8C0010F290 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CA0A2E3A1CE973EE0010F290 /* Frameworks */,
+				AB27C0561CE6F5E90081A17E /* LaunchScreen.storyboard */,
+				AB27C0541CE6F5E90081A17E /* Assets.xcassets */,
+				AB27C0591CE6F5E90081A17E /* Info.plist */,
+			);
+			name = Resources;
+			path = ColourMemory;
+			sourceTree = "<group>";
+		};
+		CA0A2E3A1CE973EE0010F290 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CA0A2E451CE977960010F290 /* SystemConfiguration.framework */,
+				CA0A2E431CE977910010F290 /* Security.framework */,
+				CA0A2E411CE9778B0010F290 /* CFNetwork.framework */,
+				CA0A2E3F1CE977850010F290 /* libc++.tbd */,
+				CA0A2E3D1CE9777D0010F290 /* libicucore.tbd */,
+				CA0A2E3B1CE9776C0010F290 /* Firebase.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +236,7 @@
 			files = (
 				AB27C0581CE6F5E90081A17E /* LaunchScreen.storyboard in Resources */,
 				AB27C0551CE6F5E90081A17E /* Assets.xcassets in Resources */,
+				CA0A2E4E1CE98C2D0010F290 /* CMSectionHeaderView.xib in Resources */,
 				AB27C0531CE6F5E90081A17E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,11 +250,18 @@
 			files = (
 				AB27C0631CE785F20081A17E /* CMCardCollectionViewCell.swift in Sources */,
 				AB27C06B1CE794160081A17E /* Card.swift in Sources */,
+				CA0A2E561CE9FA510010F290 /* CMCardDealerManager.swift in Sources */,
+				CA0A2E521CE991A70010F290 /* CMPlayerScoreTableViewCell.swift in Sources */,
+				CA0A2E4C1CE98A480010F290 /* CMHighScoresTableViewController.swift in Sources */,
+				CA0A2E541CE993A00010F290 /* PlayerScore.swift in Sources */,
+				CA0A2E481CE977FD0010F290 /* CMFBClient.swift in Sources */,
 				AB27C0601CE6F6FD0081A17E /* CMMainBoardCollectionViewController.swift in Sources */,
 				AB915BF41CE8DE2900D4814E /* Array+Shuffle.swift in Sources */,
+				CA0A2E4A1CE978580010F290 /* CMFBConstants.swift in Sources */,
 				AB27C0681CE78EFF0081A17E /* CMHeaderView.swift in Sources */,
 				AB27C04E1CE6F5E90081A17E /* AppDelegate.swift in Sources */,
 				AB27C0651CE7887D0081A17E /* Device.swift in Sources */,
+				CA0A2E501CE98D8D0010F290 /* CMSectionHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +375,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ColourMemory",
+				);
 				INFOPLIST_FILE = ColourMemory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -307,6 +393,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ColourMemory",
+				);
 				INFOPLIST_FILE = ColourMemory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

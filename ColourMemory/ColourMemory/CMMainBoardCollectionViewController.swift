@@ -14,39 +14,34 @@ private let reuseIdentifier = "CMCardCell"
 class CMMainBoardCollectionViewController: UICollectionViewController {
     
     let kDelayTimeInSeconds = Double(1)
-    let kPoints = 2
+    let kCorrectPoints = 2
+    let kIncorrectPoints = -1
     let kMaxPairOfCards = Int(8)
     
+    //Current Game Variables
     var currentActiveDeck = [Card]()
-    
     var currentActiveChosenCards = [Card]()
     var currentActiveChosenCardsIdx = [Int]()
     var currentScore = 0
+    var currentPairsFlipped = 0
+    
+    weak var alertConfirmButton: UIAlertAction?
+    
+    let cmCardDealer: CMCardDealerManager = CMCardDealerManager.sharedInstance()
+    let cmfbClient: CMFBClient = CMFBClient.sharedInstance()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         startRandomPlacementOfDecks()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CMMainBoardCollectionViewController.resetGame(_:)), name: "ResetGameNotification", object: nil)
     }
     
     func startRandomPlacementOfDecks() {
-        
-        createDeckOfCards()
+        currentActiveDeck = cmCardDealer.createDeckOfCards()
+        currentActiveDeck.shuffle()
         collectionView?.reloadData()
     }
     
-    func createDeckOfCards() {
-        var numberOfTimes = 0
-        while numberOfTimes < 2 {
-            var currentNumberOfPairs = 0
-            while currentNumberOfPairs < kMaxPairOfCards {
-                let newCard = Card(value: currentNumberOfPairs+1)
-                currentActiveDeck.append(newCard)
-                currentNumberOfPairs+=1
-            }
-            numberOfTimes+=1
-        }
-        currentActiveDeck.shuffle()
-    }
 
     // MARK: UICollectionViewDelegate
     
@@ -122,12 +117,17 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
                     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(kDelayTimeInSeconds * Double(NSEC_PER_SEC)))
                     dispatch_after(delayTime, dispatch_get_main_queue()) {
                         if self.checkIfMatch() {
-                            self.currentScore+=self.kPoints
+                            self.currentScore+=self.kCorrectPoints
+                            self.currentPairsFlipped+=1
                             self.currentActiveChosenCardsIdx.removeAll()
                             self.currentActiveChosenCards.removeAll()
                             self.collectionView!.reloadData()
                         }else{
+                            self.currentScore+=self.kIncorrectPoints
                             self.resetCardImages()
+                        }
+                        if self.checkIfGameShouldEnd() {
+                            self.showEndGameSubmissionAlertView()
                         }
                     }
                 }
@@ -145,6 +145,13 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
         return false
     }
     
+    func checkIfGameShouldEnd() -> Bool {
+        if currentPairsFlipped == kMaxPairOfCards {
+            return true
+        }
+        return false
+    }
+    
     func resetCardImages() {
         var firstCard = currentActiveDeck[currentActiveChosenCardsIdx[0]]
         var secondCard = currentActiveDeck[currentActiveChosenCardsIdx[1]]
@@ -157,5 +164,60 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
         currentActiveChosenCardsIdx.removeAll()
         currentActiveChosenCards.removeAll()
         collectionView!.reloadData()
+    }
+    
+    //MARK: TextField Configuration for Alert Controller
+    
+    func showEndGameSubmissionAlertView() {
+        let alertController = UIAlertController(title: "Congratulations!\nYour score is \(currentScore)!", message: "Please input name:", preferredStyle: .Alert)
+        
+        let confirmAction = UIAlertAction(title: "Confirm", style: .Default) { (_) in
+            if let field = alertController.textFields![0] as? UITextField {
+                // store your data
+                CMFBClient.submitNewScoreToServer(field.text!, score: self.currentScore)
+                self.showHighScoreBoard()
+            } else {
+                // user did not fill field
+            }
+        }
+        
+        alertConfirmButton = confirmAction
+        
+        alertController.addTextFieldWithConfigurationHandler { (textField) in
+            textField.placeholder = "Name"
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CMMainBoardCollectionViewController.handleTextFieldTextDidChangeNotification(_:)), name: UITextFieldTextDidChangeNotification, object: textField)
+        }
+        
+        alertController.addAction(confirmAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func handleTextFieldTextDidChangeNotification(notification: NSNotification) {
+        let textField = notification.object as! UITextField
+        
+        // Enforce a minimum length of >= 1 for secure text alerts.
+        alertConfirmButton!.enabled = textField.text?.characters.count >= 1
+    }
+    
+    //MARK: Actions
+    
+    @IBAction func onHighScore(sender: AnyObject) {
+        showHighScoreBoard()
+    }
+    
+    func showHighScoreBoard() {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("CMHighScoresTableViewControllerNav") as! UINavigationController
+        presentViewController(vc, animated: true, completion: nil)
+    }
+    
+    func resetGame(notification: NSNotification) {
+        currentActiveDeck = [Card]()
+        currentActiveChosenCards = [Card]()
+        currentActiveChosenCardsIdx = [Int]()
+        currentScore = 0
+        currentPairsFlipped = 0
+        startRandomPlacementOfDecks()
+        
     }
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CMSectionHeaderView" customModule="ColourMemory" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="37"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pSq-OX-DIv">
+                    <rect key="frame" x="374" y="0.0" width="199" height="37"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="199" id="8lv-5A-glm"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Name" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l9b-Kv-1yq">
+                    <rect key="frame" x="79" y="0.0" width="299" height="37"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="299" id="Ach-mc-Pyr"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rank" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Moe-wC-1NQ">
+                    <rect key="frame" x="20" y="0.0" width="51" height="37"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="51" id="hW7-cW-WoN"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Moe-wC-1NQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="4fD-vH-Dql"/>
+                <constraint firstItem="l9b-Kv-1yq" firstAttribute="firstBaseline" secondItem="pSq-OX-DIv" secondAttribute="firstBaseline" id="F7r-M8-Izy"/>
+                <constraint firstItem="l9b-Kv-1yq" firstAttribute="baseline" secondItem="pSq-OX-DIv" secondAttribute="baseline" id="VI1-cD-dDb"/>
+                <constraint firstItem="Moe-wC-1NQ" firstAttribute="baseline" secondItem="l9b-Kv-1yq" secondAttribute="baseline" id="Wmu-pl-Yr4"/>
+                <constraint firstItem="pSq-OX-DIv" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" constant="-19" id="kKk-Wd-v4l"/>
+                <constraint firstItem="Moe-wC-1NQ" firstAttribute="firstBaseline" secondItem="l9b-Kv-1yq" secondAttribute="firstBaseline" id="pbB-Rw-BiJ"/>
+                <constraint firstItem="Moe-wC-1NQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qUO-aX-ZkO"/>
+                <constraint firstAttribute="bottom" secondItem="Moe-wC-1NQ" secondAttribute="bottom" id="rzt-Wt-pB4"/>
+                <constraint firstItem="l9b-Kv-1yq" firstAttribute="leading" secondItem="Moe-wC-1NQ" secondAttribute="trailing" constant="8" id="zri-Hr-qOO"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="lblName" destination="l9b-Kv-1yq" id="Alv-T7-15J"/>
+                <outlet property="lblScore" destination="pSq-OX-DIv" id="roA-Md-bJz"/>
+            </connections>
+            <point key="canvasLocation" x="325" y="55.5"/>
+        </view>
+    </objects>
+</document>
