@@ -100,22 +100,22 @@
 			isa = PBXGroup;
 			children = (
 				AB27C04D1CE6F5E90081A17E /* AppDelegate.swift */,
-				AB27C0661CE78EE10081A17E /* CustomUI */,
-				CA0A2E381CE96D5E0010F290 /* Helpers */,
+				CA0A2E381CE96D5E0010F290 /* Helper */,
 				AB27C0691CE7940D0081A17E /* Model */,
-				AB27C0611CE6F7010081A17E /* ViewControllers */,
+				AB27C0611CE6F7010081A17E /* View */,
 			);
 			path = ColourMemory;
 			sourceTree = "<group>";
 		};
-		AB27C0611CE6F7010081A17E /* ViewControllers */ = {
+		AB27C0611CE6F7010081A17E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AB27C0661CE78EE10081A17E /* CustomUI */,
 				AB27C0511CE6F5E90081A17E /* Main.storyboard */,
 				AB27C05F1CE6F6FD0081A17E /* CMMainBoardCollectionViewController.swift */,
 				CA0A2E4B1CE98A480010F290 /* CMHighScoresTableViewController.swift */,
 			);
-			name = ViewControllers;
+			name = View;
 			sourceTree = "<group>";
 		};
 		AB27C0661CE78EE10081A17E /* CustomUI */ = {
@@ -139,7 +139,7 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		CA0A2E381CE96D5E0010F290 /* Helpers */ = {
+		CA0A2E381CE96D5E0010F290 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
 				AB27C0641CE7887D0081A17E /* Device.swift */,
@@ -148,7 +148,7 @@
 				CA0A2E491CE978580010F290 /* CMFBConstants.swift */,
 				CA0A2E551CE9FA510010F290 /* CMCardDealerManager.swift */,
 			);
-			name = Helpers;
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		CA0A2E391CE96D8C0010F290 /* Resources */ = {

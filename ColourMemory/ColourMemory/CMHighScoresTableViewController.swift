@@ -22,6 +22,7 @@ class CMHighScoresTableViewController: UITableViewController {
         let nib = UINib(nibName: "CMSectionHeaderView", bundle: nil)
         tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: "CMSectionHeaderView")
         tableView.estimatedRowHeight = UITableViewAutomaticDimension
+        tableView.tableFooterView = UIView(frame: CGRectZero)
         self.navigationItem.title = "Hall of Fame"
         CMFBClient.getHighScoresFromServer { (hasResult, error) in
             if hasResult {

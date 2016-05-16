@@ -15,6 +15,9 @@ let kMaxPairOfCards = Int(8)
 
 class CMCardDealerManager {
     
+    //Card Cards Result
+    var result = 0
+    
     //Current Game Variables
     var currentActiveDeck = [Card]()
     var currentActiveChosenCards = [Card]()
@@ -28,7 +31,7 @@ class CMCardDealerManager {
         return singleton
     }
     
-    func createDeckOfCards() -> [Card] {
+    func createDeckOfCards() {
         var numberOfTimes = 0
         while numberOfTimes < 2 {
             var currentNumberOfPairs = 0
@@ -39,15 +42,10 @@ class CMCardDealerManager {
             }
             numberOfTimes+=1
         }
-        return currentActiveDeck
+        currentActiveDeck.shuffle()
     }
     
-    //Card Intelligence :
-    // 0 - First Card, Do Nothing, reload
-    // 1 - Second Card, Matched, Score, reload
-    // 2 - Last Pair, Game End
-    
-    func selectCard(card: Card, idx: Int) -> Int {
+    func selectCard(card: Card, idx: Int) {
         if currentActiveChosenCards.count == 0 || currentActiveChosenCards.count == 1 {
             var chosenCard = currentActiveDeck[idx]
             currentActiveChosenCards.append(chosenCard)
@@ -59,23 +57,39 @@ class CMCardDealerManager {
                 if currentActiveChosenCards.count == 2 {
                     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(kDelayTimeInSeconds * Double(NSEC_PER_SEC)))
                     dispatch_after(delayTime, dispatch_get_main_queue()) {
-                        if self.checkIfMatch() {
-                            self.currentScore+=kCorrectPoints
-                            self.currentPairsFlipped+=1
-                            self.currentActiveChosenCardsIdx.removeAll()
-                            self.currentActiveChosenCards.removeAll()
-                        }else{
-                            self.currentScore+=kIncorrectPoints
-                            self.resetBoard()
-                        }
-                        if self.checkIfGameShouldEnd() {
-                            return 2 //End Game
-                        }
+                        self.checkCards()
                     }
                 }
             }
         }
-        return 0
+    }
+    
+    // Card Result :
+    // 0 - First Card, Do Nothing, reload
+    // 1 - Second Card, Matched, Score, reload
+    // 2 - Second Card, MisMatch, Minus Score, reload
+    // 3 - Last Pair, Game End
+    
+    func checkCards() {
+        if self.checkIfMatch() {
+            self.currentScore+=kCorrectPoints
+            self.currentPairsFlipped+=1
+            self.currentActiveChosenCardsIdx.removeAll()
+            self.currentActiveChosenCards.removeAll()
+            result = 1
+        }else{
+            self.currentScore+=kIncorrectPoints
+            self.flipBackBothCards()
+            result = 2
+        }
+        if self.checkIfGameShouldEnd() {
+            result = 3
+            NSNotificationCenter.defaultCenter().postNotificationName("CheckMatchNotification", object: nil)
+            return
+        }
+        
+        result = 0
+        NSNotificationCenter.defaultCenter().postNotificationName("CheckMatchNotification", object: nil)
     }
     
     func checkIfMatch() -> Bool {
@@ -94,7 +108,7 @@ class CMCardDealerManager {
         return false
     }
     
-    func resetBoard() {
+    func flipBackBothCards() {
         var firstCard = currentActiveDeck[currentActiveChosenCardsIdx[0]]
         var secondCard = currentActiveDeck[currentActiveChosenCardsIdx[1]]
         firstCard.flipped = false
@@ -105,5 +119,14 @@ class CMCardDealerManager {
         currentActiveDeck[currentActiveChosenCardsIdx[1]] = secondCard
         currentActiveChosenCardsIdx.removeAll()
         currentActiveChosenCards.removeAll()
+    }
+    
+    func resetGame() {
+        currentActiveDeck = [Card]()
+        currentActiveChosenCards = [Card]()
+        currentActiveChosenCardsIdx = [Int]()
+        currentScore = 0
+        currentPairsFlipped = 0
+        
     }
 }

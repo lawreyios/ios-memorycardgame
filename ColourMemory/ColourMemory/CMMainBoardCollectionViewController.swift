@@ -18,13 +18,6 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
     let kIncorrectPoints = -1
     let kMaxPairOfCards = Int(8)
     
-    //Current Game Variables
-    var currentActiveDeck = [Card]()
-    var currentActiveChosenCards = [Card]()
-    var currentActiveChosenCardsIdx = [Int]()
-    var currentScore = 0
-    var currentPairsFlipped = 0
-    
     weak var alertConfirmButton: UIAlertAction?
     
     let cmCardDealer: CMCardDealerManager = CMCardDealerManager.sharedInstance()
@@ -34,11 +27,11 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         startRandomPlacementOfDecks()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CMMainBoardCollectionViewController.resetGame(_:)), name: "ResetGameNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CMMainBoardCollectionViewController.applyResults(_:)), name: "CheckMatchNotification", object: nil)
     }
     
     func startRandomPlacementOfDecks() {
-        currentActiveDeck = cmCardDealer.createDeckOfCards()
-        currentActiveDeck.shuffle()
+        cmCardDealer.createDeckOfCards()        
         collectionView?.reloadData()
     }
     
@@ -74,7 +67,7 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
         if kind == UICollectionElementKindSectionHeader {
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "CollectionHeaderView", forIndexPath: indexPath) as! CMHeaderView
             headerView.backgroundColor = UIColor(red: 241/255, green: 240/255, blue: 233/255, alpha: 1.0)
-            headerView.lblScore.text = "Score : \(currentScore)"
+            headerView.lblScore.text = "Score : \(cmCardDealer.currentScore)"
             reusableview = headerView
         }
         return reusableview
@@ -96,7 +89,7 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CMCardCollectionViewCell
         
-        let cardImage = UIImage(named: currentActiveDeck[indexPath.row].imageName!)
+        let cardImage = UIImage(named: cmCardDealer.currentActiveDeck[indexPath.row].imageName!)
         cell.cardImageView.image = cardImage
     
         return cell
@@ -105,76 +98,19 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDelegate
 
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if currentActiveChosenCards.count == 0 || currentActiveChosenCards.count == 1 {
-            var chosenCard = currentActiveDeck[indexPath.row]
-            currentActiveChosenCards.append(chosenCard)
-            currentActiveChosenCardsIdx.append(indexPath.row)
-            if !chosenCard.flipped {
-                chosenCard.imageName = "colour\(chosenCard.value!)"
-                chosenCard.flipped = true
-                currentActiveDeck[indexPath.row] = chosenCard
-                if currentActiveChosenCards.count == 2 {
-                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(kDelayTimeInSeconds * Double(NSEC_PER_SEC)))
-                    dispatch_after(delayTime, dispatch_get_main_queue()) {
-                        if self.checkIfMatch() {
-                            self.currentScore+=self.kCorrectPoints
-                            self.currentPairsFlipped+=1
-                            self.currentActiveChosenCardsIdx.removeAll()
-                            self.currentActiveChosenCards.removeAll()
-                            self.collectionView!.reloadData()
-                        }else{
-                            self.currentScore+=self.kIncorrectPoints
-                            self.resetCardImages()
-                        }
-                        if self.checkIfGameShouldEnd() {
-                            self.showEndGameSubmissionAlertView()
-                        }
-                    }
-                }
-            }
-            collectionView.reloadData()
-        }
-    }
-    
-    func checkIfMatch() -> Bool {
-        let firstCard = currentActiveChosenCards[0]
-        let secondCard = currentActiveChosenCards[1]
-        if firstCard.value == secondCard.value {
-            return true
-        }
-        return false
-    }
-    
-    func checkIfGameShouldEnd() -> Bool {
-        if currentPairsFlipped == kMaxPairOfCards {
-            return true
-        }
-        return false
-    }
-    
-    func resetCardImages() {
-        var firstCard = currentActiveDeck[currentActiveChosenCardsIdx[0]]
-        var secondCard = currentActiveDeck[currentActiveChosenCardsIdx[1]]
-        firstCard.flipped = false
-        firstCard.imageName = kCardBgImageName
-        currentActiveDeck[currentActiveChosenCardsIdx[0]] = firstCard
-        secondCard.flipped = false
-        secondCard.imageName = kCardBgImageName
-        currentActiveDeck[currentActiveChosenCardsIdx[1]] = secondCard
-        currentActiveChosenCardsIdx.removeAll()
-        currentActiveChosenCards.removeAll()
-        collectionView!.reloadData()
+        cmCardDealer.selectCard(cmCardDealer.currentActiveDeck[indexPath.row], idx: indexPath.row)
+        collectionView.reloadData()
     }
     
     //MARK: TextField Configuration for Alert Controller
     
     func showEndGameSubmissionAlertView() {
-        let alertController = UIAlertController(title: "Congratulations!\nYour score is \(currentScore)!", message: "Please input name:", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Congratulations!\nYour score is \(cmCardDealer.currentScore)!", message: "Please input name:", preferredStyle: .Alert)
         
         let confirmAction = UIAlertAction(title: "Confirm", style: .Default) { (_) in
             if let field = alertController.textFields![0] as? UITextField {
                 // store your data
-                CMFBClient.submitNewScoreToServer(field.text!, score: self.currentScore)
+                CMFBClient.submitNewScoreToServer(field.text!, score: self.cmCardDealer.currentScore)
                 self.showHighScoreBoard()
             } else {
                 // user did not fill field
@@ -212,12 +148,18 @@ class CMMainBoardCollectionViewController: UICollectionViewController {
     }
     
     func resetGame(notification: NSNotification) {
-        currentActiveDeck = [Card]()
-        currentActiveChosenCards = [Card]()
-        currentActiveChosenCardsIdx = [Int]()
-        currentScore = 0
-        currentPairsFlipped = 0
+        cmCardDealer.resetGame()
         startRandomPlacementOfDecks()
-        
+    }
+    
+    func applyResults(notification: NSNotification) {
+        switch cmCardDealer.result {
+        case 3:
+            showEndGameSubmissionAlertView()
+            break
+            
+        default:
+            collectionView!.reloadData()
+        }
     }
 }
