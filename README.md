@@ -1,7 +1,5 @@
-# accedo-cardgame
-Interview Test
+# Memory-Card-Game
 
-This is an Interview Programming Test prepared by Accedo.
 This project is completed on the 17th May 2016. 
 
 The app integrated third-party server-based client; Firebase. 
